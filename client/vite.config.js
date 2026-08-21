@@ -11,7 +11,7 @@ export default defineConfig({
     // so the client can just call fetch("/api/meals") without CORS issues.
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
+        target: "http://localhost:5001",
         changeOrigin: true,
       },
     },

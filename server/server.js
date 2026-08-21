@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 // ----- Health check route -----
 app.get("/", (req, res) => {
-  res.json({ message: "🍛 CeylonMealApp API is running", status: "ok" });
+  res.json({ message: "🍛 HomeMeals API is running", status: "ok" });
 });
 
 // ----- Meal routes -----

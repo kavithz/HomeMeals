@@ -1,8 +1,8 @@
-# 🍽️ CeylonMealApp
+# 🍽️ HomeMeals
 
 ## 📖 Overview
 
-CeylonMealApp is a full-stack web application that helps users discover, save and manage meal recipes. It combines recipes from TheMealDB API with a local SQLite database, allowing users to explore new meals while keeping their own personal collection in one place.
+HomeMeals is a full-stack web application that helps users discover, save and manage meal recipes. It combines recipes from TheMealDB API with a local SQLite database, allowing users to explore new meals while keeping their own personal collection in one place.
 
 The application is designed to provide a simple way to discover and manage recipes.
 
@@ -99,5 +99,5 @@ Some features that could be added in future versions include:
 
 ## ✅ Conclusion
 
-CeylonMealApp is a practical full-stack application that combines external recipe data with locally stored user content. It demonstrates frontend and backend integration while providing a simple and enjoyable experience for discovering, saving, and managing meal recipes.
+HomeMeals is a practical full-stack application that combines external recipe data with locally stored user content. It demonstrates frontend and backend integration while providing a simple and enjoyable experience for discovering, saving, and managing meal recipes.
 

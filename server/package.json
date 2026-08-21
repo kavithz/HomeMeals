@@ -1,7 +1,7 @@
 {
-  "name": "ceylonmealapp-server",
+  "name": "homemeals-server",
   "version": "1.0.0",
-  "description": "Backend API server for CeylonMealApp - Express + SQLite",
+  "description": "Backend API server for HomeMeals - Express + SQLite",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {

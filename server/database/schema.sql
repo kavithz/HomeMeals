@@ -1,9 +1,9 @@
 -- schema.sql
--- Reference SQL script for the CeylonMealApp database.
+-- Reference SQL script for the HomeMeals database.
 -- NOTE: You do not need to run this manually - database/db.js runs this
 -- automatically (using sqlite3) the first time the server starts.
 -- This file is provided so you can inspect or recreate the schema by hand
--- (for example using the `sqlite3` CLI: `sqlite3 ceylonmeal.db < schema.sql`).
+-- (for example using the `sqlite3` CLI: `sqlite3 homemeals.db < schema.sql`).
 
 CREATE TABLE IF NOT EXISTS meals (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

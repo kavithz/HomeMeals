@@ -1,5 +1,5 @@
 node_modules/
 npm-debug.log
 .env
-database/ceylonmeal.db
+database/homemeals.db
 .DS_Store

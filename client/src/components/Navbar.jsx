@@ -30,7 +30,7 @@ function Navbar() {
           to="/"
           sx={{ flexGrow: 1, textDecoration: "none", color: "white", fontWeight: 700 }}
         >
-          🇱🇰 CeylonMealApp
+          HomeMeals
         </Typography>
 
         <Box sx={{ display: "flex", gap: 1 }}>

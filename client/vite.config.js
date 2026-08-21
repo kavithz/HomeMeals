@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// Vite configuration for the CeylonMealApp client.
+// Vite configuration for the HomeMeals client.
 // See https://vitejs.dev/config/ for more options.
 export default defineConfig({
   plugins: [react()],

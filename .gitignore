@@ -3,4 +3,4 @@ dist/
 .env
 .DS_Store
 npm-debug.log
-server/database/ceylonmeal.db
+server/database/homemeals.db

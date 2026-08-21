@@ -5,8 +5,8 @@
 const sqlite3 = require("sqlite3").verbose(); // verbose() gives us better stack traces on errors
 const path = require("path");
 
-// The database file will live inside this "database" folder as ceylonmeal.db
-const DB_PATH = path.join(__dirname, "ceylonmeal.db");
+// The database file will live inside this "database" folder as homemeals.db
+const DB_PATH = path.join(__dirname, "homemeals.db");
 
 // Open (or create, if it doesn't exist yet) the SQLite database file
 const db = new sqlite3.Database(DB_PATH, (err) => {

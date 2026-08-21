@@ -80,7 +80,7 @@ function Home() {
           🇱🇰 Sri Lankan Favorites
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 3 }}>
-          Classic Ceylon dishes worth cooking - kottu, hoppers, sambol, and more.
+          Discover delicious meals worth cooking every day.
         </Typography>
       </Box>
 

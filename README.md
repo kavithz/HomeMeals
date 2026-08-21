@@ -4,6 +4,8 @@
 
 CeylonMealApp is a full-stack web application that helps users discover, save and manage meal recipes. It combines recipes from TheMealDB API with a local SQLite database, allowing users to explore new meals while keeping their own personal collection in one place.
 
+The application is designed to provide a simple way to discover and manage recipes.
+
 The project was built to demonstrate full-stack web development using React for the frontend and Express with SQLite for the backend. It includes API integration, database management, routing, and complete CRUD functionality.
 
 ## 🎯 Project Objective

@@ -77,7 +77,7 @@ function Home() {
       {/* ----- Sri Lankan Favorites section ----- */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="h4" component="h1" fontWeight={700}>
-          🇱🇰 Sri Lankan Favorites
+          Sri Lankan People Favorites & Discover Foreign Meals.
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 3 }}>
           Discover delicious meals worth cooking every day.

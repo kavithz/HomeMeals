@@ -1,103 +1,74 @@
-# 🍽️ HomeMeals
+# HomeMeals
 
-## 📖 Overview
+HomeMeals is a full-stack web application for discovering, saving and managing meal recipes. It combines TheMealDB API with a local SQLite database to provide meal discovery and personal recipe management.
 
-HomeMeals is a full-stack web application that helps users discover, save and manage meal recipes. It combines recipes from TheMealDB API with a local SQLite database, allowing users to explore new meals while keeping their own personal collection in one place.
+## Features
 
-The application is designed to provide a simple way to discover and manage recipes.
+- Search meals by name or ingredient
+- Discover random meal recipes
+- View detailed recipe information
+- Save favourite meals
+- Create custom recipes
+- Edit saved recipes
+- Delete recipes
+- Full CRUD functionality
+- Integration with TheMealDB API
 
-The project was built to demonstrate full-stack web development using React for the frontend and Express with SQLite for the backend. It includes API integration, database management, routing, and complete CRUD functionality.
-
-## 🎯 Project Objective
-
-The objective of this project is to create a simple and user-friendly meal application where users can:
-
-* Discover random meal recipes.
-* Search meals by name or ingredient.
-* View complete recipe details.
-* Save favourite meals.
-* Create their own custom recipes.
-* Edit and delete saved meals.
-
-## ✨ Features
-
-### Meal Discovery
-
-Users can browse random meal suggestions retrieved from TheMealDB API. This makes it easy to discover different recipes every time the application is used.
-
-### Smart Search
-
-Users can search for meals by their name or by ingredient. Search results are fetched directly from the API and displayed instantly.
-
-### Detailed Recipes
-
-Each recipe includes useful information such as:
-
-* Meal image
-* Category
-* Cuisine
-* Ingredients and measurements
-* Cooking instructions
-
-### Save Meals
-
-Favourite meals can be saved to a local SQLite database for future access.
-
-### Custom Recipes
-
-Users can manually add their own recipes without depending on the external API.
-
-### Manage Saved Meals
-
-Saved meals can be updated or removed at any time, demonstrating complete CRUD operations.
-
-## 💻 Technologies Used
+## Tech Stack
 
 ### Frontend
 
-* React
-* Vite
-* React Router DOM
-* Context API
-* Material UI
-* Axios
+- React
+- Vite
+- React Router DOM
+- Context API
+- Material UI
+- Axios
 
 ### Backend
 
-* Node.js
-* Express.js
-* SQLite
+- Node.js
+- Express.js
+
+### Database
+
+- SQLite
 
 ### External API
 
-* TheMealDB API
+- TheMealDB API
 
-## 📚 What I Learned
+## Project Structure
 
-Through this project I gained practical experience in:
-
-* Building and organizing a full-stack web application.
-* Connecting a React frontend with an Express backend.
-* Using REST APIs to retrieve external data.
-* Managing application state with Context API.
-* Working with SQLite databases.
-* Implementing CRUD operations.
-* Creating reusable React components.
-* Organizing a project using a clean folder structure.
-
-## 🚀 Future Improvements
-
-Some features that could be added in future versions include:
-
-* User authentication.
-* Meal categories and advanced filters.
-* Favourite and rating system.
-* Nutrition information.
-* Image upload for custom meals.
-* Dark mode.
-* Better mobile responsiveness.
-
-## ✅ Conclusion
-
-HomeMeals is a practical full-stack application that combines external recipe data with locally stored user content. It demonstrates frontend and backend integration while providing a simple and enjoyable experience for discovering, saving, and managing meal recipes.
-
+```text
+HomeMeals/
+│
+├── client/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+│
+├── server/
+│   ├── controllers/
+│   │   └── mealController.js
+│   ├── database/
+│   │   ├── schema.sql
+│   │   └── db.js
+│   ├── models/
+│   │   └── mealModel.js
+│   ├── routes/
+│   │   └── mealRoutes.js
+│   ├── server.js
+│   └── package.json
+│
+├── .gitignore
+└── README.md

@@ -6,6 +6,7 @@
 import { Routes, Route } from "react-router-dom";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Navbar from "./components/Navbar";
@@ -56,15 +57,25 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MealProvider>
-        <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
+        <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", bgcolor: "background.default" }}>
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/meal/:id" element={<MealDetails />} />
-            <Route path="/add-meal" element={<AddMeal />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Box component="main" sx={{ flexGrow: 1 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/meal/:id" element={<MealDetails />} />
+              <Route path="/add-meal" element={<AddMeal />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Box>
+          <Box component="footer" sx={{ borderTop: "1px solid rgba(37, 35, 31, 0.1)", px: 2, py: 2.5, textAlign: "center" }}>
+            <Typography variant="body2" color="text.secondary">
+              © 2026 HomeMeals
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Created by Kavith Palansuriya
+            </Typography>
+          </Box>
         </Box>
       </MealProvider>
     </ThemeProvider>

@@ -30,6 +30,20 @@ app.get("/", (req, res) => {
   res.json({ message: "🍛 HomeMeals API is running", status: "ok" });
 });
 
+// Proxy TheMealDB through our backend so browsers do not hit its CORS policy.
+app.get("/api/themealdb/*", async (req, res, next) => {
+  try {
+    const mealDbPath = req.params[0];
+    const query = new URLSearchParams(req.query).toString();
+    const mealDbUrl = `https://www.themealdb.com/api/json/v1/1/${mealDbPath}${query ? `?${query}` : ""}`;
+    const response = await fetch(mealDbUrl);
+    const data = await response.json();
+    res.status(response.status).json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // ----- Meal routes -----
 // All routes defined in routes/mealRoutes.js will be prefixed with /api/meals
 app.use("/api/meals", mealRoutes);

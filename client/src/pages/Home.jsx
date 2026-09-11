@@ -9,6 +9,9 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 import MealCard from "../components/MealCard";
@@ -99,9 +102,25 @@ function Home() {
       {loadingLankan && <Loader message="Fetching Sri Lankan favorites..." />}
       {!loadingLankan && lankanError && <ErrorMessage message={lankanError} onRetry={loadLankanMeals} />}
       {!loadingLankan && !lankanError && lankanMeals.length === 0 && (
-        <Typography color="text.secondary" sx={{ mb: 4 }}>
-          No matches found on TheMealDB right now - try Search instead.
-        </Typography>
+        <>
+          <Typography color="text.secondary" sx={{ mb: 3 }}>
+            TheMealDB has limited Sri Lankan coverage, so here is our curated collection while live recipes are unavailable.
+          </Typography>
+          <Grid container spacing={2} sx={{ mb: 6 }}>
+            {SRI_LANKAN_DISH_NAMES.map((dish) => (
+              <Grid item xs={6} sm={4} md={3} key={dish}>
+                <Card sx={{ height: "100%", bgcolor: "rgba(255, 255, 255, 0.72)" }}>
+                  <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
+                    <Chip label="Sri Lankan" size="small" color="warning" variant="outlined" sx={{ mb: 1 }} />
+                    <Typography variant="subtitle1" fontWeight={700}>
+                      {dish}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </>
       )}
       {!loadingLankan && !lankanError && lankanMeals.length > 0 && (
         <Grid container spacing={3} sx={{ mb: 6 }}>

@@ -5,7 +5,7 @@
 
 import axios from "axios";
 
-const MEALDB_BASE_URL = "https://www.themealdb.com/api/json/v1/1";
+const MEALDB_BASE_URL = "/api/themealdb";
 
 const mealDbApi = axios.create({
   baseURL: MEALDB_BASE_URL,

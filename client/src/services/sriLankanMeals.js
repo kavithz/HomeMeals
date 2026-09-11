@@ -1,3 +1,4 @@
+// services/sriLankanMeals.js
 export const SRI_LANKAN_DISH_NAMES = [
   "Kottu",
   "Hoppers",
@@ -5,12 +6,12 @@ export const SRI_LANKAN_DISH_NAMES = [
   "Rice and Curry",
   "Kiribath",
   "Pol Sambol",
-  "Kokis",
-  "Kevum",
+  "Fish Ambul Thiyal",
+  "Dhal Curry",
   "Lamprais",
   "Watalappan",
-  "Lunumiris",
-  "Bibikkan",
+  "Pittu",
+  "Pol Roti",
 ];
 
 export const SRI_LANKAN_MEAL_DETAILS = {
@@ -28,6 +29,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Curry powder",
       "Chili",
     ],
+   
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Kottu_Roti.jpg",
   },
@@ -42,6 +44,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Salt",
       "Egg (for egg hoppers)",
     ],
+    
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Egg_hoppers_sri_Lanka.jpg",
   },
@@ -49,6 +52,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
     description:
       "Known locally as idiyappam, these are delicate nests of steamed rice-flour noodles pressed through a mold. They're a staple Sri Lankan breakfast, usually served with dhal curry, coconut milk gravy (kiri hodi), or coconut sambol.",
     ingredients: ["Rice flour", "Hot water", "Salt"],
+    
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Sri_Lanka-String_hoppers.jpg",
   },
@@ -63,6 +67,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Coconut sambol",
       "Papadum",
     ],
+    
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Sri_Lankan_Rice_and_Curry.jpg",
   },
@@ -70,6 +75,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
     description:
       "Rice slow-cooked in coconut milk until thick and creamy, then set and cut into diamond-shaped pieces. Kiribath (literally 'milk rice') is prepared for New Year celebrations, birthdays, and other auspicious occasions, and is traditionally eaten with lunu miris (a spicy chili and onion paste).",
     ingredients: ["Rice", "Coconut milk", "Water", "Salt"],
+   
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Kiribath_(milk_rice).jpg",
   },
@@ -84,33 +90,41 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Salt",
       "Maldive fish (optional)",
     ],
+    
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Pol_Sambol.jpg",
   },
-  Kokis: {
+  "Fish Ambul Thiyal": {
     description:
-      "A crispy, deep-fried Sri Lankan snack made from a rice flour and coconut milk batter, dipped onto a decorative iron mold to form its signature flower or rosette shape before frying until golden. Kokis is an essential treat during the Sinhala and Tamil New Year celebrations.",
+      "A sour, dry fish curry from southern Sri Lanka, traditionally made with firm fish such as tuna cooked with goraka (a sour dried fruit), black pepper, and spices until the liquid reduces and the spice mix coats each piece. It was originally developed as a way to preserve fish without refrigeration and is best served with rice.",
     ingredients: [
-      "Rice flour",
-      "Coconut milk",
-      "Egg",
-      "Turmeric",
+      "Firm fish (tuna)",
+      "Goraka (dried gamboge)",
+      "Black pepper",
+      "Garlic",
+      "Ginger",
+      "Curry leaves",
+      "Cinnamon",
       "Salt",
-      "Oil (for frying)",
     ],
-    imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/Kokis.JPG",
+    
+    imageUrl: "https://placehold.co/600x400/png?text=Fish+Ambul+Thiyal",
   },
-  Kevum: {
+  "Dhal Curry": {
     description:
-      "Also called kavum, this deep-fried Sri Lankan sweet is made from a fermented rice flour batter mixed with kithul treacle, traditionally shaped into a small knot (konda kavum) as it cooks. Like kokis, it's a signature treat of the Sinhala and Tamil New Year.",
+      "Also known as parippu curry, this is Sri Lanka's everyday lentil dish: red lentils simmered with coconut milk and turmeric, then finished with a tempering of mustard seeds, curry leaves, and dried chili fried in oil. It's eaten with nearly every rice and curry meal, hoppers, or string hoppers.",
     ingredients: [
-      "Rice flour",
-      "Kithul treacle",
-      "Baking soda",
-      "Oil (for frying)",
+      "Red lentils (masoor dal)",
+      "Coconut milk",
+      "Turmeric",
+      "Onion",
+      "Garlic",
+      "Mustard seeds",
+      "Curry leaves",
+      "Dried or green chili",
     ],
-    imageUrl:
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Konda_Kavum_01.JPG",
+    
+    imageUrl: "https://placehold.co/600x400/png?text=Dhal+Curry",
   },
   Lamprais: {
     description:
@@ -123,6 +137,7 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Ash plantain or brinjal moju",
       "Banana leaf",
     ],
+   
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Lamprais_(Sri_Lankan_cuisine).jpg",
   },
@@ -138,34 +153,34 @@ export const SRI_LANKAN_MEAL_DETAILS = {
       "Cloves",
       "Cashews",
     ],
+    
     imageUrl:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Watalappan-Sri_Lanka.jpg",
   },
-  Lunumiris: {
+  Pittu: {
     description:
-      "A simple, fiery Sri Lankan sambol made by grinding dried chili, onion, and salt into a coarse paste, sometimes brightened with a squeeze of lime or a touch of Maldive fish. It's one of the most common everyday condiments, eaten with hoppers, bread, or rice.",
+      "Steamed cylinders of rice flour layered with fresh grated coconut inside a special mold, giving a crumbly, slightly nutty texture. Pittu is especially popular in Sri Lanka's Northern and Eastern provinces and is typically served with coconut milk gravy, curry, or banana.",
     ingredients: [
-      "Dried red chili",
+      "Rice flour",
+      "Grated coconut",
+      "Salt",
+      "Coconut milk gravy (for serving)",
+    ],
+   
+    imageUrl: "https://placehold.co/600x400/png?text=Pittu",
+  },
+  "Pol Roti": {
+    description:
+      "A rustic, unleavened flatbread made by kneading wheat flour (sometimes mixed with kurakkan flour) with fresh grated coconut, then cooking it on a hot griddle until golden and slightly charred. Pol roti is a common Sri Lankan breakfast or snack, usually eaten with lunu miris or a spicy sambol.",
+    ingredients: [
+      "Wheat flour",
+      "Grated coconut",
+      "Green chili",
       "Onion",
       "Salt",
-      "Lime juice (optional)",
-      "Maldive fish (optional)",
+      "Water",
     ],
-    imageUrl:
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Lunumiris_with_Appam.JPG",
-  },
-  Bibikkan: {
-    description:
-      "A dark, moist Sri Lankan coconut cake made from shredded coconut, jaggery, and semolina, warmed with spices like cinnamon and cardamom. Believed to have been introduced by the Portuguese, bibikkan is traditionally baked for Christmas, New Year, and other festive occasions.",
-    ingredients: [
-      "Shredded coconut",
-      "Jaggery",
-      "Semolina",
-      "Cinnamon",
-      "Cardamom",
-      "Raisins or cashews (optional)",
-    ],
-    imageUrl:
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Bibikkan.jpg",
+    // PLACEHOLDER - no verified free-to-use photo found. Replace with a real photo.
+    imageUrl: "https://placehold.co/600x400/png?text=Pol+Roti",
   },
 };

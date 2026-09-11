@@ -12,16 +12,21 @@ import Box from "@mui/material/Box";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import SearchIcon from "@mui/icons-material/Search";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 
 import MealCard from "../components/MealCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import * as mealDbApi from "../services/mealDbApi";
+import { SRI_LANKAN_DISH_NAMES } from "../services/sriLankanMeals";
 
 function Search() {
   const [searchType, setSearchType] = useState("name"); // "name" | "ingredient"
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [curatedResults, setCuratedResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
@@ -45,12 +50,19 @@ function Search() {
     setLoading(true);
     setError(null);
     setHasSearched(true);
+    setCuratedResults([]);
 
     try {
       if (searchType === "name") {
         const response = await mealDbApi.searchMealsByName(trimmedQuery);
         const meals = response.data.meals || [];
-        setResults(meals.map(mealDbApi.normalizeMeal));
+        const normalizedMeals = meals.map(mealDbApi.normalizeMeal);
+        setResults(normalizedMeals);
+        if (normalizedMeals.length === 0) {
+          setCuratedResults(
+            SRI_LANKAN_DISH_NAMES.filter((dish) => dish.toLowerCase().includes(trimmedQuery.toLowerCase()))
+          );
+        }
       } else {
         // Ingredient search only returns partial data (id, name, thumbnail) from TheMealDB,
         // which is enough to render cards - full details are fetched on the detail page.
@@ -110,9 +122,31 @@ function Search() {
       {!loading && error && <ErrorMessage message={error} />}
 
       {!loading && !error && hasSearched && results.length === 0 && (
-        <Typography color="text.secondary" sx={{ py: 4 }}>
-          No meals found for "{query}". Try a different search term.
-        </Typography>
+        curatedResults.length > 0 ? (
+          <>
+            <Typography color="text.secondary" sx={{ mb: 2 }}>
+              Curated Sri Lankan dishes matching "{query}".
+            </Typography>
+            <Grid container spacing={2}>
+              {curatedResults.map((dish) => (
+                <Grid item xs={6} sm={4} md={3} key={dish}>
+                  <Card sx={{ height: "100%" }}>
+                    <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
+                      <Chip label="Sri Lankan" size="small" color="warning" variant="outlined" sx={{ mb: 1 }} />
+                      <Typography variant="subtitle1" fontWeight={700}>
+                        {dish}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        ) : (
+          <Typography color="text.secondary" sx={{ py: 4 }}>
+            No meals found for "{query}". Try a different search term.
+          </Typography>
+        )
       )}
 
       {!loading && !error && results.length > 0 && (

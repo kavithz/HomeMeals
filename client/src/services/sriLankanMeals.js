@@ -22,7 +22,7 @@ export const SRI_LANKAN_DISH_NAMES = [
   "Parippu Wade",
   "Isso Wade",
   "Ulundu Vadai",
-  "Vejitable Roti",
+  "Vegetable Roti",
   "Egg Roti",
   "Kukul Mas Curry",
   "Devilled Chicken",

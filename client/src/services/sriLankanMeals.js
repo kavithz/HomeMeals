@@ -16,6 +16,8 @@ export const SRI_LANKAN_DISH_NAMES = [
   "Dhal Curry",
   "Lamprais",
   "Watalappan",
+  "Pittu",
+  "Pol Roti",
 ];
 
 export const SRI_LANKAN_MEAL_DETAILS = {
@@ -58,5 +60,13 @@ export const SRI_LANKAN_MEAL_DETAILS = {
   Watalappan: {
     description: "Silky steamed coconut custard scented with jaggery, cardamom, and nutmeg.",
     ingredients: ["Coconut milk", "Kithul jaggery", "Eggs", "Cardamom", "Nutmeg", "Cashews"],
+  },
+  Pittu: {
+    description: "Steamed cylinders of rice flour and fresh coconut, usually enjoyed with coconut milk gravy or a rich curry.",
+    ingredients: ["Rice flour", "Fresh coconut", "Warm water", "Salt", "Coconut milk gravy"],
+  },
+  "Pol Roti": {
+    description: "A rustic coconut flatbread cooked on a hot pan and served with lunu miris, curry, or a spicy sambol.",
+    ingredients: ["Wheat flour", "Fresh coconut", "Green chili", "Onion", "Water", "Salt"],
   },
 };

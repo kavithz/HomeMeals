@@ -34,7 +34,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { useMeals } from "../context/MealContext";
 import { getMealDetails, normalizeMeal } from "../services/mealDbApi";
 import * as api from "../services/api";
-import { SRI_LANKAN_MEAL_IMAGE } from "../services/sriLankanMeals";
+import { SRI_LANKAN_MEAL_DETAILS } from "../services/sriLankanMeals";
 
 function MealDetails() {
   const { id } = useParams();
@@ -56,19 +56,18 @@ function MealDetails() {
     try {
       if (source === "curated") {
         const curatedName = searchParams.get("name") || "Sri Lankan dish";
+        const curatedDetails = SRI_LANKAN_MEAL_DETAILS[curatedName] || {
+          description: "A curated Sri Lankan dish with regional and family variations.",
+          ingredients: [],
+        };
         setMeal({
           mealId: id,
           name: curatedName,
           category: "Sri Lankan cuisine",
           area: "Sri Lanka",
-          thumbnail: SRI_LANKAN_MEAL_IMAGE,
-          ingredients: [
-            { ingredient: "Coconut", measure: "As needed" },
-            { ingredient: "Onion and garlic", measure: "As needed" },
-            { ingredient: "Chili and curry spices", measure: "To taste" },
-            { ingredient: "Fresh curry leaves", measure: "Optional" },
-          ],
-          instructions: `${curatedName} is a traditional Sri Lankan dish with regional and family variations. This curated entry is a dish profile; use the name to find a preferred recipe and adjust the spices to taste.`,
+          thumbnail: "",
+          ingredients: curatedDetails.ingredients.map((ingredient) => ({ ingredient, measure: "" })),
+          instructions: curatedDetails.description,
         });
         setSavedDbId(null);
       } else if (source === "saved") {
@@ -176,13 +175,11 @@ function MealDetails() {
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={5}>
-          <Paper elevation={2} sx={{ overflow: "hidden", borderRadius: 2 }}>
-            <img
-              src={meal.thumbnail || "https://via.placeholder.com/500x500?text=No+Image"}
-              alt={meal.name}
-              style={{ width: "100%", display: "block" }}
-            />
-          </Paper>
+          {meal.thumbnail && (
+            <Paper elevation={2} sx={{ overflow: "hidden", borderRadius: 2 }}>
+              <img src={meal.thumbnail} alt={meal.name} style={{ width: "100%", display: "block" }} />
+            </Paper>
+          )}
         </Grid>
 
         <Grid item xs={12} md={7}>

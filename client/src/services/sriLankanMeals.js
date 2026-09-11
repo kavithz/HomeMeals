@@ -5,61 +5,58 @@
 // won't appear - this list is just a starting point for the "Sri Lankan
 // Favorites" section on the Home page.
 
-export const SRI_LANKAN_MEAL_IMAGE =
-  "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85";
-
 export const SRI_LANKAN_DISH_NAMES = [
   "Kottu",
   "Hoppers",
-  "Pol Sambol",
-  "Rice and Curry",
-  "Watalappan",
-  "Lamprais",
-  "Dhal Curry",
-  "Fish Ambul Thiyal",
   "String Hoppers",
-  "Pittu",
+  "Rice and Curry",
   "Kiribath",
-  "Pol Roti",
-  "Godamba Roti",
-  "Parippu Wade",
-  "Isso Wade",
-  "Ulundu Vadai",
-  "Vegetable Roti",
-  "Egg Roti",
-  "Kukul Mas Curry",
-  "Devilled Chicken",
-  "Devilled Fish",
-  "Devilled Prawns",
-  "Jaffna Crab Curry",
-  "Sri Lankan Fish Curry",
-  "Sri Lankan Chicken Curry",
-  "Sri Lankan Beef Curry",
-  "Black Pork Curry",
-  "Mutton Curry",
-  "Cashew Curry",
-  "Jackfruit Curry",
-  "Young Jackfruit Curry",
-  "Brinjal Moju",
-  "Wambatu Moju",
-  "Beetroot Curry",
-  "Gotu Kola Sambol",
-  "Mallung",
-  "Kankun Mallung",
-  "Parippu Mallung",
-  "Seeni Sambol",
-  "Lunu Miris",
-  "Katta Sambol",
-  "Achcharu",
-  "Sri Lankan Pickles",
-  "Kiri Hodi",
-  "Polos Curry",
-  "Kola Kenda",
-  "Thala Guli",
-  "Kokis",
-  "Kavum",
-  "Athirasa",
-  "Aluwa",
-  "Pani Pol",
-  "Bibikkan",
+  "Pol Sambol",
+  "Fish Ambul Thiyal",
+  "Dhal Curry",
+  "Lamprais",
+  "Watalappan",
 ];
+
+export const SRI_LANKAN_MEAL_DETAILS = {
+  Kottu: {
+    description: "Chopped roti stir-fried on a hot griddle with vegetables, egg, and a choice of meat or seafood.",
+    ingredients: ["Godamba roti", "Leek", "Cabbage", "Carrot", "Egg", "Onion", "Chili", "Curry powder"],
+  },
+  Hoppers: {
+    description: "Bowl-shaped fermented rice-flour pancakes with crisp edges and a soft center, often served with sambol or curry.",
+    ingredients: ["Rice flour", "Coconut milk", "Yeast", "Sugar", "Salt", "Egg (optional)"],
+  },
+  "String Hoppers": {
+    description: "Delicate steamed rice-flour noodle nests traditionally served with kiri hodi, dhal curry, or coconut sambol.",
+    ingredients: ["Rice flour", "Boiling water", "Salt", "Coconut milk", "Curry leaves"],
+  },
+  "Rice and Curry": {
+    description: "A Sri Lankan everyday feast built around rice, several vegetable curries, dhal, sambol, and a meat or fish curry.",
+    ingredients: ["Red rice", "Dhal", "Coconut milk", "Curry leaves", "Chili", "Turmeric", "Seasonal vegetables"],
+  },
+  Kiribath: {
+    description: "Coconut milk rice cooked until creamy, pressed into squares, and served for celebrations and special occasions.",
+    ingredients: ["White rice", "Coconut milk", "Water", "Salt"],
+  },
+  "Pol Sambol": {
+    description: "A bright, spicy coconut relish made with chili, lime, and onion that lifts almost any Sri Lankan meal.",
+    ingredients: ["Fresh coconut", "Red onion", "Dried chili", "Lime", "Salt", "Maldivian fish (optional)"],
+  },
+  "Fish Ambul Thiyal": {
+    description: "Firm fish coated in goraka and spices, then cooked until dry, tangy, and deeply savory.",
+    ingredients: ["Firm fish", "Goraka", "Black pepper", "Cinnamon", "Garlic", "Ginger", "Salt"],
+  },
+  "Dhal Curry": {
+    description: "Creamy red lentils simmered with coconut milk, turmeric, aromatics, and a fragrant tempering of spices.",
+    ingredients: ["Red lentils", "Coconut milk", "Onion", "Garlic", "Turmeric", "Curry leaves", "Cumin"],
+  },
+  Lamprais: {
+    description: "A Dutch-influenced Sri Lankan parcel of rice, meat curry, frikkadels, sambol, and ash plantain baked in a banana leaf.",
+    ingredients: ["Short-grain rice", "Meat curry", "Frikkadels", "Brinjal moju", "Seeni sambol", "Banana leaf"],
+  },
+  Watalappan: {
+    description: "Silky steamed coconut custard scented with jaggery, cardamom, and nutmeg.",
+    ingredients: ["Coconut milk", "Kithul jaggery", "Eggs", "Cardamom", "Nutmeg", "Cashews"],
+  },
+};

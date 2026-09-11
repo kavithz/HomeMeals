@@ -1,6 +1,4 @@
-/* index.css
-   Minimal global styles. Most styling in this app is handled by
-   Material UI components and the "sx" prop, so this file stays small. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -8,9 +6,9 @@
 
 body {
   margin: 0;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f7f5f0;
 }
 
 a {
@@ -28,4 +26,14 @@ html {
 
 img {
   display: block;
+}
+
+::selection {
+  color: #ffffff;
+  background: #8d153a;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(217, 119, 69, 0.55);
+  outline-offset: 3px;
 }

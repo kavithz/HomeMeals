@@ -30,16 +30,16 @@ function MealCard({ meal, source = "api" }) {
   };
 
   return (
-    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Card sx={{ height: "100%", display: "flex", flexDirection: "column", transition: "transform 180ms ease, box-shadow 180ms ease", "&:hover": { transform: "translateY(-4px)", boxShadow: "0 14px 30px rgba(55, 43, 30, 0.14)" } }}>
       <CardActionArea onClick={handleClick} sx={{ flexGrow: 1, display: "flex", flexDirection: "column", alignItems: "stretch" }}>
         <CardMedia
           component="img"
-          height="180"
+          sx={{ height: 190, objectFit: "cover" }}
           image={meal.thumbnail || "https://via.placeholder.com/300x180?text=No+Image"}
           alt={meal.name}
         />
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h6" component="div" noWrap title={meal.name}>
+          <Typography gutterBottom variant="h6" component="div" noWrap title={meal.name} sx={{ fontWeight: 700 }}>
             {meal.name}
           </Typography>
           <Stack direction="row" spacing={1} flexWrap="wrap">

@@ -73,14 +73,20 @@ function Home() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 3, sm: 5 } }}>
       {/* ----- Sri Lankan Favorites section ----- */}
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="h4" component="h1" fontWeight={700}>
-          Sri Lankan People Favorites & Discover Foreign Meals.
+      <Box sx={{ mb: { xs: 4, sm: 6 }, maxWidth: 760 }}>
+        <Typography variant="h2" component="h1" fontWeight={700} sx={{ fontSize: { xs: "2.35rem", sm: "3.5rem" }, lineHeight: 1.05, mb: 2 }}>
+          Cook something worth sharing.
         </Typography>
-        <Typography color="text.secondary" sx={{ mb: 3 }}>
-          Discover delicious meals worth cooking every day.
+        <Typography color="text.secondary" sx={{ fontSize: { xs: "1rem", sm: "1.15rem" }, maxWidth: 600 }}>
+          Explore Sri Lankan favorites and fresh ideas from around the world, all in one warm little kitchen.
+        </Typography>
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", mb: 2 }}>
+        <Typography variant="h4" component="h2" fontWeight={700}>
+          Sri Lankan favorites
         </Typography>
       </Box>
 

@@ -37,7 +37,13 @@ app.get("/api/themealdb/*", async (req, res, next) => {
     const query = new URLSearchParams(req.query).toString();
     const mealDbUrl = `https://www.themealdb.com/api/json/v1/1/${mealDbPath}${query ? `?${query}` : ""}`;
     const response = await fetch(mealDbUrl);
-    const data = await response.json();
+    const body = await response.text();
+    let data;
+    try {
+      data = JSON.parse(body);
+    } catch (parseError) {
+      return res.status(502).json({ success: false, message: "TheMealDB returned an invalid response." });
+    }
     res.status(response.status).json(data);
   } catch (error) {
     next(error);

@@ -16,7 +16,7 @@ import CuratedMealCard from "../components/CuratedMealCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import { useMeals } from "../context/MealContext";
-import { getRandomMeals, normalizeMeal, searchMealsByArea, searchMealsByName } from "../services/mealDbApi";
+import { getRandomMeals, normalizeMeal, searchMealsByArea } from "../services/mealDbApi";
 import { SRI_LANKAN_DISH_NAMES } from "../services/sriLankanMeals";
 
 function Home() {
@@ -30,27 +30,18 @@ function Home() {
 
   const { savedMeals, loading: loadingSaved, error: savedError, refreshSavedMeals } = useMeals();
 
-  // Combine TheMealDB's area filter with the curated names so the section
-  // includes every available Sri Lankan meal without duplicate cards.
+  // Use the single area lookup for live matches. The curated catalog below
+  // remains available when TheMealDB has no Sri Lankan coverage.
   const loadLankanMeals = async () => {
     setLoadingLankan(true);
     setLankanError(null);
     try {
-      const [areaResult, ...nameResults] = await Promise.allSettled([
-        searchMealsByArea("Sri Lankan"),
-        ...SRI_LANKAN_DISH_NAMES.map((dish) => searchMealsByName(dish)),
-      ]);
-      const areaMeals = areaResult.status === "fulfilled" ? areaResult.value.data.meals || [] : [];
-      const namedMeals = nameResults
-        .filter((result) => result.status === "fulfilled")
-        .map((result) => (result.value.data.meals ? result.value.data.meals[0] : null))
-        .filter(Boolean)
-        .map(normalizeMeal);
-      const found = [...areaMeals.map(normalizeMeal), ...namedMeals].filter(Boolean);
+      const response = await searchMealsByArea("Sri Lankan");
+      const found = (response.data.meals || []).map(normalizeMeal).filter(Boolean);
       setLankanMeals([...new Map(found.map((meal) => [meal.mealId, meal])).values()]);
     } catch (err) {
       console.error("Failed to load Sri Lankan favorites:", err);
-      setLankanError("Could not load Sri Lankan favorites. Please try again.");
+      setLankanMeals([]);
     } finally {
       setLoadingLankan(false);
     }

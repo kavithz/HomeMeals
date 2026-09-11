@@ -15,7 +15,7 @@ import MealCard from "../components/MealCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import { useMeals } from "../context/MealContext";
-import { getRandomMeals, normalizeMeal, searchMealsByName } from "../services/mealDbApi";
+import { getRandomMeals, normalizeMeal, searchMealsByArea, searchMealsByName } from "../services/mealDbApi";
 import { SRI_LANKAN_DISH_NAMES } from "../services/sriLankanMeals";
 
 function Home() {
@@ -29,18 +29,24 @@ function Home() {
 
   const { savedMeals, loading: loadingSaved, error: savedError, refreshSavedMeals } = useMeals();
 
-  // Look up each curated Sri Lankan dish name on TheMealDB and keep
-  // whichever ones actually return a result.
+  // Combine TheMealDB's area filter with the curated names so the section
+  // includes every available Sri Lankan meal without duplicate cards.
   const loadLankanMeals = async () => {
     setLoadingLankan(true);
     setLankanError(null);
     try {
-      const responses = await Promise.all(SRI_LANKAN_DISH_NAMES.map((dish) => searchMealsByName(dish)));
-      const found = responses
-        .map((res) => (res.data.meals ? res.data.meals[0] : null))
+      const [areaResult, ...nameResults] = await Promise.allSettled([
+        searchMealsByArea("Sri Lankan"),
+        ...SRI_LANKAN_DISH_NAMES.map((dish) => searchMealsByName(dish)),
+      ]);
+      const areaMeals = areaResult.status === "fulfilled" ? areaResult.value.data.meals || [] : [];
+      const namedMeals = nameResults
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => (result.value.data.meals ? result.value.data.meals[0] : null))
         .filter(Boolean)
         .map(normalizeMeal);
-      setLankanMeals(found);
+      const found = [...areaMeals.map(normalizeMeal), ...namedMeals].filter(Boolean);
+      setLankanMeals([...new Map(found.map((meal) => [meal.mealId, meal])).values()]);
     } catch (err) {
       console.error("Failed to load Sri Lankan favorites:", err);
       setLankanError("Could not load Sri Lankan favorites. Please try again.");

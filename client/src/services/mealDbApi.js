@@ -19,6 +19,14 @@ const mealDbApi = axios.create({
 export const searchMealsByName = (name) => mealDbApi.get("/search.php", { params: { s: name } });
 
 /**
+ * Filter meals by cuisine area. TheMealDB returns partial meal information
+ * here, which is enough for the meal cards on the home page.
+ * @param {string} area
+ * @returns {Promise}
+ */
+export const searchMealsByArea = (area) => mealDbApi.get("/filter.php", { params: { a: area } });
+
+/**
  * Filter TheMealDB meals by a single main ingredient.
  * NOTE: this endpoint returns only partial meal info (id, name, thumbnail) -
  * use getMealDetails() below to fetch the full details for a given meal.

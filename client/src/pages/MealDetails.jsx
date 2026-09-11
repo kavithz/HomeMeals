@@ -34,6 +34,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { useMeals } from "../context/MealContext";
 import { getMealDetails, normalizeMeal } from "../services/mealDbApi";
 import * as api from "../services/api";
+import { SRI_LANKAN_MEAL_IMAGE } from "../services/sriLankanMeals";
 
 function MealDetails() {
   const { id } = useParams();
@@ -53,7 +54,24 @@ function MealDetails() {
     setLoading(true);
     setError(null);
     try {
-      if (source === "saved") {
+      if (source === "curated") {
+        const curatedName = searchParams.get("name") || "Sri Lankan dish";
+        setMeal({
+          mealId: id,
+          name: curatedName,
+          category: "Sri Lankan cuisine",
+          area: "Sri Lanka",
+          thumbnail: SRI_LANKAN_MEAL_IMAGE,
+          ingredients: [
+            { ingredient: "Coconut", measure: "As needed" },
+            { ingredient: "Onion and garlic", measure: "As needed" },
+            { ingredient: "Chili and curry spices", measure: "To taste" },
+            { ingredient: "Fresh curry leaves", measure: "Optional" },
+          ],
+          instructions: `${curatedName} is a traditional Sri Lankan dish with regional and family variations. This curated entry is a dish profile; use the name to find a preferred recipe and adjust the spices to taste.`,
+        });
+        setSavedDbId(null);
+      } else if (source === "saved") {
         // Fetch straight from our own backend/database
         const response = await api.getSavedMealById(id);
         const row = response.data.data;

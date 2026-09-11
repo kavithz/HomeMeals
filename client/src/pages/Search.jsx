@@ -12,11 +12,9 @@ import Box from "@mui/material/Box";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import SearchIcon from "@mui/icons-material/Search";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Chip from "@mui/material/Chip";
 
 import MealCard from "../components/MealCard";
+import CuratedMealCard from "../components/CuratedMealCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import * as mealDbApi from "../services/mealDbApi";
@@ -130,14 +128,7 @@ function Search() {
             <Grid container spacing={2}>
               {curatedResults.map((dish) => (
                 <Grid item xs={6} sm={4} md={3} key={dish}>
-                  <Card sx={{ height: "100%" }}>
-                    <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
-                      <Chip label="Sri Lankan" size="small" color="warning" variant="outlined" sx={{ mb: 1 }} />
-                      <Typography variant="subtitle1" fontWeight={700}>
-                        {dish}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  <CuratedMealCard dish={dish} index={SRI_LANKAN_DISH_NAMES.indexOf(dish)} />
                 </Grid>
               ))}
             </Grid>

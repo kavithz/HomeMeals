@@ -5,6 +5,9 @@
 // won't appear - this list is just a starting point for the "Sri Lankan
 // Favorites" section on the Home page.
 
+export const SRI_LANKAN_MEAL_IMAGE =
+  "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85";
+
 export const SRI_LANKAN_DISH_NAMES = [
   "Kottu",
   "Hoppers",

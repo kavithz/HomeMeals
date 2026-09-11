@@ -9,12 +9,10 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Chip from "@mui/material/Chip";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 import MealCard from "../components/MealCard";
+import CuratedMealCard from "../components/CuratedMealCard";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 import { useMeals } from "../context/MealContext";
@@ -109,14 +107,7 @@ function Home() {
           <Grid container spacing={2} sx={{ mb: 6 }}>
             {SRI_LANKAN_DISH_NAMES.map((dish) => (
               <Grid item xs={6} sm={4} md={3} key={dish}>
-                <Card sx={{ height: "100%", bgcolor: "rgba(255, 255, 255, 0.72)" }}>
-                  <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
-                    <Chip label="Sri Lankan" size="small" color="warning" variant="outlined" sx={{ mb: 1 }} />
-                    <Typography variant="subtitle1" fontWeight={700}>
-                      {dish}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <CuratedMealCard dish={dish} index={SRI_LANKAN_DISH_NAMES.indexOf(dish)} />
               </Grid>
             ))}
           </Grid>

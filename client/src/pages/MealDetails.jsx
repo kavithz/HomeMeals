@@ -18,6 +18,8 @@ import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -46,6 +48,7 @@ function MealDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [savedDbId, setSavedDbId] = useState(null); // the row id in OUR database, if this meal is already saved
+  const [language, setLanguage] = useState("en");
 
   const { addSavedMeal, removeSavedMeal } = useMeals();
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
@@ -68,6 +71,7 @@ function MealDetails() {
           thumbnail: "",
           ingredients: curatedDetails.ingredients.map((ingredient) => ({ ingredient, measure: "" })),
           instructions: curatedDetails.description,
+          instructionsSinhala: curatedDetails.descriptionSinhala || "",
         });
         setSavedDbId(null);
       } else if (source === "saved") {
@@ -123,6 +127,10 @@ function MealDetails() {
     loadMeal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, source]);
+
+  const handleLanguageChange = (event, nextLanguage) => {
+    if (nextLanguage) setLanguage(nextLanguage);
+  };
 
   const handleSave = async () => {
     const result = await addSavedMeal(meal);
@@ -226,8 +234,27 @@ function MealDetails() {
           <Typography variant="h6" fontWeight={700} gutterBottom>
             Instructions
           </Typography>
+          {source === "curated" && meal.instructionsSinhala && (
+            <ToggleButtonGroup
+              value={language}
+              exclusive
+              onChange={handleLanguageChange}
+              size="small"
+              color="success"
+              sx={{ mb: 2 }}
+              aria-label="Recipe language"
+            >
+              <ToggleButton value="en" aria-label="English recipe instructions">
+                English
+              </ToggleButton>
+              <ToggleButton value="si" aria-label="Sinhala recipe instructions">
+                සිංහල
+              </ToggleButton>
+            </ToggleButtonGroup>
+          )}
           <Typography sx={{ whiteSpace: "pre-line", lineHeight: 1.8 }}>
-            {meal.instructions || "No instructions available."}
+            {(language === "si" && meal.instructionsSinhala ? meal.instructionsSinhala : meal.instructions) ||
+              "No instructions available."}
           </Typography>
         </Grid>
       </Grid>

@@ -1,13 +1,15 @@
 // services/api.js
 // A pre-configured Axios instance for talking to OUR OWN backend
 // (the Express + SQLite server in the /server folder).
-// Because vite.config.js proxies "/api" to http://localhost:5000,
+// Because vite.config.js proxies "/api" to http://localhost:5001,
 // we can just use relative paths here like "/api/meals".
 
 import axios from "axios";
 
+export const API_BASE_URL = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

@@ -13,9 +13,25 @@ const mealRoutes = require("./routes/mealRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const localOrigins = ["http://localhost:5173", "http://127.0.0.1:5173"];
+const configuredOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const allowedOrigins = new Set([...localOrigins, ...configuredOrigins]);
 
 // ----- Middleware -----
-app.use(cors()); // allow the React client (on a different port) to call this API
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Requests without an Origin header include local health checks and server-to-server calls.
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
+  })
+);
 app.use(express.json()); // parse incoming JSON request bodies into req.body
 app.use(express.urlencoded({ extended: true })); // parse URL-encoded bodies
 
@@ -28,6 +44,10 @@ app.use((req, res, next) => {
 // ----- Health check route -----
 app.get("/", (req, res) => {
   res.json({ message: "🍛 HomeMeals API is running", status: "ok" });
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
 });
 
 // Proxy TheMealDB through our backend so browsers do not hit its CORS policy.
@@ -66,5 +86,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server listening on port ${PORT}`);
 });

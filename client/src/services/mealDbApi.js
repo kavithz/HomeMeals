@@ -4,8 +4,9 @@
 // Docs: https://www.themealdb.com/api.php
 
 import axios from "axios";
+import { API_BASE_URL } from "./api";
 
-const MEALDB_BASE_URL = "/api/themealdb";
+const MEALDB_BASE_URL = `${API_BASE_URL}/themealdb`;
 
 const mealDbApi = axios.create({
   baseURL: MEALDB_BASE_URL,

@@ -10,6 +10,7 @@ const MEALDB_BASE_URL = `${API_BASE_URL}/themealdb`;
 
 const mealDbApi = axios.create({
   baseURL: MEALDB_BASE_URL,
+  timeout: 8000,
 });
 
 /**
@@ -52,8 +53,17 @@ export const getMealDetails = (id) => mealDbApi.get("/lookup.php", { params: { i
  */
 export const getRandomMeals = async (count = 8) => {
   const requests = Array.from({ length: count }, () => mealDbApi.get("/random.php"));
-  const responses = await Promise.all(requests);
-  return responses.map((res) => res.data.meals[0]);
+  const results = await Promise.allSettled(requests);
+  const meals = results
+    .filter((result) => result.status === "fulfilled")
+    .map((result) => result.value.data.meals?.[0])
+    .filter(Boolean);
+
+  if (meals.length === 0) {
+    throw new Error("No random meals were returned by TheMealDB.");
+  }
+
+  return meals;
 };
 
 /**

@@ -56,7 +56,7 @@ app.get("/api/themealdb/*", async (req, res, next) => {
     const mealDbPath = req.params[0];
     const query = new URLSearchParams(req.query).toString();
     const mealDbUrl = `https://www.themealdb.com/api/json/v1/1/${mealDbPath}${query ? `?${query}` : ""}`;
-    const response = await fetch(mealDbUrl);
+    const response = await fetch(mealDbUrl, { signal: AbortSignal.timeout(8000) });
     const body = await response.text();
     let data;
     try {

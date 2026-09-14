@@ -1,22 +1,22 @@
 // models/mealModel.js
-// This file is the "model" layer - it is the ONLY place that talks
-// directly to the database using SQL. Controllers call these functions
-// instead of writing SQL themselves. This keeps the code organized.
+// This file is the model layer and the only place that talks directly to
+// PostgreSQL. Controllers call these functions instead of writing SQL.
 
-const db = require("../database/db");
+const { getDatabase } = require("../database/db");
+
+async function database() {
+  const connection = getDatabase();
+  await connection.initializationPromise;
+  return connection.sql;
+}
 
 /**
  * Get every meal stored in the database, newest first.
  * @returns {Promise<Array>} array of meal rows
  */
-function getAllMeals() {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM meals ORDER BY createdAt DESC";
-    db.all(sql, [], (err, rows) => {
-      if (err) return reject(err);
-      resolve(rows);
-    });
-  });
+async function getAllMeals() {
+  const sql = await database();
+  return sql('SELECT * FROM meals ORDER BY "createdAt" DESC');
 }
 
 /**
@@ -24,14 +24,10 @@ function getAllMeals() {
  * @param {number} id
  * @returns {Promise<Object|undefined>} the meal row, or undefined if not found
  */
-function getMealById(id) {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM meals WHERE id = ?";
-    db.get(sql, [id], (err, row) => {
-      if (err) return reject(err);
-      resolve(row);
-    });
-  });
+async function getMealById(id) {
+  const sql = await database();
+  const rows = await sql`SELECT * FROM meals WHERE id = ${id}`;
+  return rows[0];
 }
 
 /**
@@ -39,14 +35,9 @@ function getMealById(id) {
  * @param {string} name
  * @returns {Promise<Array>}
  */
-function searchMealsByName(name) {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM meals WHERE name LIKE ? ORDER BY createdAt DESC";
-    db.all(sql, [`%${name}%`], (err, rows) => {
-      if (err) return reject(err);
-      resolve(rows);
-    });
-  });
+async function searchMealsByName(name) {
+  const sql = await database();
+  return sql`SELECT * FROM meals WHERE name ILIKE ${`%${name}%`} ORDER BY "createdAt" DESC`;
 }
 
 /**
@@ -55,14 +46,9 @@ function searchMealsByName(name) {
  * @param {string} ingredient
  * @returns {Promise<Array>}
  */
-function searchMealsByIngredient(ingredient) {
-  return new Promise((resolve, reject) => {
-    const sql = "SELECT * FROM meals WHERE ingredients LIKE ? ORDER BY createdAt DESC";
-    db.all(sql, [`%${ingredient}%`], (err, rows) => {
-      if (err) return reject(err);
-      resolve(rows);
-    });
-  });
+async function searchMealsByIngredient(ingredient) {
+  const sql = await database();
+  return sql`SELECT * FROM meals WHERE ingredients ILIKE ${`%${ingredient}%`} ORDER BY "createdAt" DESC`;
 }
 
 /**
@@ -71,15 +57,11 @@ function searchMealsByIngredient(ingredient) {
  * @param {string} mealId
  * @returns {Promise<Object|undefined>}
  */
-function getMealByMealId(mealId) {
-  return new Promise((resolve, reject) => {
-    if (!mealId) return resolve(undefined); // custom meals with no mealId are never "duplicates"
-    const sql = "SELECT * FROM meals WHERE mealId = ?";
-    db.get(sql, [mealId], (err, row) => {
-      if (err) return reject(err);
-      resolve(row);
-    });
-  });
+async function getMealByMealId(mealId) {
+  if (!mealId) return undefined;
+  const sql = await database();
+  const rows = await sql`SELECT * FROM meals WHERE "mealId" = ${mealId}`;
+  return rows[0];
 }
 
 /**
@@ -99,25 +81,17 @@ async function createMeal(meal) {
     return { meal: existing, alreadyExisted: true };
   }
 
-  return new Promise((resolve, reject) => {
-    // ingredients is expected to be a JS array/object - we store it as a JSON string
-    const ingredientsJSON = JSON.stringify(ingredients || []);
+  const sql = await database();
+  const ingredientsJSON = JSON.stringify(ingredients || []);
+  const rows = await sql`
+    INSERT INTO meals ("mealId", name, category, area, instructions, thumbnail, ingredients)
+    VALUES (${mealId || null}, ${name}, ${category || null}, ${area || null}, ${instructions || null}, ${thumbnail || null}, ${ingredientsJSON})
+    ON CONFLICT ("mealId") WHERE "mealId" IS NOT NULL DO NOTHING
+    RETURNING *
+  `;
 
-    const sql = `
-      INSERT INTO meals (mealId, name, category, area, instructions, thumbnail, ingredients)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const params = [mealId || null, name, category || null, area || null, instructions || null, thumbnail || null, ingredientsJSON];
-
-    db.run(sql, params, function (err) {
-      // NOTE: we use a regular function() (not an arrow function) above
-      // so that "this" refers to the sqlite3 statement, giving us this.lastID
-      if (err) return reject(err);
-      getMealById(this.lastID)
-        .then((row) => resolve({ meal: row, alreadyExisted: false }))
-        .catch(reject);
-    });
-  });
+  if (rows[0]) return { meal: rows[0], alreadyExisted: false };
+  return { meal: await getMealByMealId(mealId), alreadyExisted: true };
 }
 
 /**
@@ -126,24 +100,18 @@ async function createMeal(meal) {
  * @param {Object} meal - fields to update
  * @returns {Promise<Object|undefined>} the updated meal row
  */
-function updateMeal(id, meal) {
-  return new Promise((resolve, reject) => {
-    const { name, category, area, instructions, thumbnail, ingredients } = meal;
-    const ingredientsJSON = JSON.stringify(ingredients || []);
-
-    const sql = `
-      UPDATE meals
-      SET name = ?, category = ?, area = ?, instructions = ?, thumbnail = ?, ingredients = ?, updatedAt = datetime('now')
-      WHERE id = ?
-    `;
-    const params = [name, category || null, area || null, instructions || null, thumbnail || null, ingredientsJSON, id];
-
-    db.run(sql, params, function (err) {
-      if (err) return reject(err);
-      if (this.changes === 0) return resolve(undefined); // no row matched that id
-      getMealById(id).then(resolve).catch(reject);
-    });
-  });
+async function updateMeal(id, meal) {
+  const sql = await database();
+  const { name, category, area, instructions, thumbnail, ingredients } = meal;
+  const rows = await sql`
+    UPDATE meals
+    SET name = ${name}, category = ${category || null}, area = ${area || null},
+        instructions = ${instructions || null}, thumbnail = ${thumbnail || null},
+        ingredients = ${JSON.stringify(ingredients || [])}, "updatedAt" = CURRENT_TIMESTAMP
+    WHERE id = ${id}
+    RETURNING *
+  `;
+  return rows[0];
 }
 
 /**
@@ -151,14 +119,10 @@ function updateMeal(id, meal) {
  * @param {number} id
  * @returns {Promise<boolean>} true if a row was deleted, false otherwise
  */
-function deleteMeal(id) {
-  return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM meals WHERE id = ?";
-    db.run(sql, [id], function (err) {
-      if (err) return reject(err);
-      resolve(this.changes > 0);
-    });
-  });
+async function deleteMeal(id) {
+  const sql = await database();
+  const rows = await sql`DELETE FROM meals WHERE id = ${id} RETURNING id`;
+  return rows.length > 0;
 }
 
 module.exports = {

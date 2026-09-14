@@ -1,19 +1,20 @@
 -- schema.sql
--- Reference SQL script for the HomeMeals database.
--- NOTE: You do not need to run this manually - database/db.js runs this
--- automatically (using sqlite3) the first time the server starts.
--- This file is provided so you can inspect or recreate the schema by hand
--- (for example using the `sqlite3` CLI: `sqlite3 homemeals.db < schema.sql`).
+-- Reference PostgreSQL schema for the HomeMeals database.
+-- server/database/db.js applies this safely when the API first uses the database.
 
 CREATE TABLE IF NOT EXISTS meals (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  mealId TEXT,
+  id SERIAL PRIMARY KEY,
+  "mealId" TEXT,
   name TEXT NOT NULL,
   category TEXT,
   area TEXT,
   instructions TEXT,
   thumbnail TEXT,
   ingredients TEXT,
-  createdAt TEXT DEFAULT (datetime('now')),
-  updatedAt TEXT DEFAULT (datetime('now'))
+  "createdAt" TEXT DEFAULT CURRENT_TIMESTAMP,
+  "updatedAt" TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS meals_mealid_unique
+  ON meals ("mealId")
+  WHERE "mealId" IS NOT NULL;

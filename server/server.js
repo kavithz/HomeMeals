@@ -4,10 +4,7 @@
 
 const express = require("express");
 const cors = require("cors");
-
-// Importing this ensures the SQLite database + "meals" table are created
-// as soon as the server starts (see database/db.js for details).
-require("./database/db");
+require("dotenv").config();
 
 const mealRoutes = require("./routes/mealRoutes");
 
@@ -85,6 +82,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "Something went wrong on the server" });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server listening on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server listening on port ${PORT}`);
+  });
+}
+
+module.exports = app;

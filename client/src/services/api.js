@@ -1,6 +1,6 @@
 // services/api.js
 // A pre-configured Axios instance for talking to OUR OWN backend
-// (the Express + SQLite server in the /server folder).
+// (the Express + PostgreSQL server in the /server folder).
 // Because vite.config.js proxies "/api" to http://localhost:5001,
 // we can just use relative paths here like "/api/meals".
 
@@ -15,7 +15,7 @@ const api = axios.create({
   },
 });
 
-// ----- Saved meals (our own SQLite database) -----
+// ----- Saved meals (our own PostgreSQL database) -----
 
 // Get every meal saved in the database
 export const getSavedMeals = () => api.get("/meals");

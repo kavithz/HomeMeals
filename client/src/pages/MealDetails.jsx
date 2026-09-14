@@ -99,21 +99,21 @@ function MealDetails() {
         }
         setMeal(normalizeMeal(rawMeal));
         setSavedDbId(null);
+        setLoading(false);
 
         // Check whether this exact meal (by its TheMealDB id) was already
         // saved in a previous session, so we don't show "Save Meal" again
-        // and risk creating a duplicate row.
-        try {
-          const savedResponse = await api.getSavedMeals();
-          const existingMatch = savedResponse.data.data.find((m) => m.mealId === rawMeal.idMeal);
-          if (existingMatch) {
-            setSavedDbId(existingMatch.id);
-          }
-        } catch (lookupErr) {
-          // Non-fatal: worst case the Save button shows when it technically
-          // doesn't need to. The backend itself will also reject duplicates.
-          console.warn("Could not check for existing saved meal:", lookupErr);
-        }
+        // and risk creating a duplicate row. This lookup is non-blocking so
+        // a slow database connection cannot delay the recipe details.
+        api.getSavedMeals()
+          .then((savedResponse) => {
+            const existingMatch = savedResponse.data.data.find((m) => m.mealId === rawMeal.idMeal);
+            if (existingMatch) setSavedDbId(existingMatch.id);
+          })
+          .catch((lookupErr) => {
+            // Non-fatal: the backend also rejects duplicate saves.
+            console.warn("Could not check for existing saved meal:", lookupErr);
+          });
       }
     } catch (err) {
       console.error("Failed to load meal details:", err);

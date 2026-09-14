@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -77,6 +78,7 @@ function App() {
             </Typography>
           </Box>
         </Box>
+        <SpeedInsights />
       </MealProvider>
     </ThemeProvider>
   );

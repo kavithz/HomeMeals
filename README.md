@@ -1,36 +1,47 @@
 # HomeMeals
 
-HomeMeals is a full-stack web application for discovering, saving, and managing meal recipes. It combines recipes from **TheMealDB API** with a local **SQLite** database, so users can explore new meals while keeping their own personal collection in one place.
+HomeMeals is a full-stack web application for discovering, saving, and managing meal recipes. It combines recipes from **TheMealDB API** with a **Neon PostgreSQL** database, so users can explore new meals while keeping their own personal collection in one place.
 
-The app was built to demonstrate full-stack development with **React** on the frontend and **Express + SQLite** on the backend, including external API integration, database management, routing, and complete CRUD functionality.
+The app was built to demonstrate full-stack development with **React** on the frontend and **Express + PostgreSQL** on the backend, including external API integration, database management, routing, search, and complete CRUD functionality.
 
 ## Key Features
 
-- **Meal Discovery** — browse random meal suggestions from TheMealDB API
-- **Smart Search** — search meals by name or ingredient
-- **Sri Lankan Favorites** — a curated list of popular Sri Lankan dishes on the home page
-- **Detailed Recipes** — view meal image, category, cuisine, ingredients, measurements, and instructions
-- **Save Meals** — save favourite meals to a local SQLite database
-- **Custom Recipes** — create your own recipes without relying on the external API
-- **Manage Saved Meals** — edit or delete saved meals (full CRUD)
+* **Meal Discovery** — browse random meal suggestions from TheMealDB API
+* **Smart Search** — search meals by name or ingredient
+* **Sri Lankan Favorites** — a curated list of popular Sri Lankan dishes on the home page
+* **Detailed Recipes** — view meal image, category, cuisine, ingredients, measurements, and instructions
+* **Save Meals** — save favourite meals to a PostgreSQL database
+* **Custom Recipes** — create your own recipes without relying on the external API
+* **Manage Saved Meals** — edit or delete saved meals (full CRUD)
+* **Duplicate Prevention** — prevents duplicate meals from being saved
+* **TheMealDB Integration** — retrieve external meal information through the backend
+* **Responsive Interface** — built with React and Material UI
 
 ## Technologies Used
 
 **Frontend**
-- React
-- Vite
-- React Router DOM
-- Material UI
-- Axios
+
+* React
+* Vite
+* React Router DOM
+* Material UI
+* Axios
 
 **Backend**
-- Node.js
-- Express.js
-- SQLite (via `sqlite3`)
-- CORS
+
+* Node.js
+* Express.js
+* PostgreSQL
+* Neon Serverless PostgreSQL
+* CORS
 
 **External API**
-- TheMealDB API
+
+* TheMealDB API
+
+**Deployment**
+
+* Vercel
 
 ## Project Structure
 
@@ -41,17 +52,20 @@ HomeMeals/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   ├── services/  # API calls (own backend + TheMealDB)
+│   │   ├── services/  # API calls
 │   │   ├── App.jsx
 │   │   └── main.jsx
+│   ├── vercel.json
 │   └── package.json
 │
 ├── server/            # Express backend
+│   ├── api/           # Vercel serverless entry point
 │   ├── controllers/
-│   ├── database/      # SQLite database + schema
+│   ├── database/      # PostgreSQL database and schema
 │   ├── models/
 │   ├── routes/
 │   ├── server.js
+│   ├── vercel.json
 │   └── package.json
 │
 └── README.md
@@ -69,8 +83,6 @@ npm install
 npm run dev
 ```
 
-This starts the Express server on `http://localhost:5001` using nodemon. The SQLite database file and `meals` table are created automatically the first time the server starts — no manual setup needed.
-
 To run it without nodemon:
 
 ```bash
@@ -85,21 +97,29 @@ npm install
 npm run dev
 ```
 
-This starts the Vite dev server on `http://localhost:5173`. It automatically proxies requests to `/api` to the backend at `http://localhost:5001`, so no extra configuration is needed.
+The frontend communicates with the backend through the application's API configuration.
 
-Open `http://localhost:5173` in your browser to use the app.
-
-### Build for Production
+## Build for Production
 
 ```bash
 cd /path/to/HomeMeals/client
+npm install
 npm run build
 npm run preview
 ```
 
 ## Development Notes
 
-- Both `client` and `server` require `npm install` before first run — they have separate `package.json` files.
-- The backend must be running on port `5001` for the frontend proxy to work correctly.
-- No API key or `.env` file is required — TheMealDB's free tier is used directly, and the SQLite database is created automatically.
-- The SQLite database file (`server/database/homemeals.db`) is generated locally and should not be committed to GitHub.
+* Both `client` and `server` require `npm install` before first run — they have separate `package.json` files.
+* The application uses **Neon PostgreSQL** for persistent meal data.
+* The database schema is initialized automatically when required.
+* Database initialization is safe and does not delete existing data.
+* Duplicate external meals are prevented from being saved multiple times.
+* Custom meals can be created without relying on TheMealDB.
+* TheMealDB is used as the external recipe source.
+* No TheMealDB API key is required for the current implementation.
+* Each developer should use their own database configuration when running the project locally.
+* Private configuration and credentials should not be committed to GitHub.
+* The project can be deployed with Vercel using separate frontend and backend projects.
+* The project can be cloned into any directory; replace `/path/to/HomeMeals` in the commands with the actual location of the cloned repository.
+

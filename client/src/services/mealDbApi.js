@@ -52,12 +52,22 @@ export const getMealDetails = (id) => mealDbApi.get("/lookup.php", { params: { i
  * @returns {Promise<Array>} array of full meal objects
  */
 export const getRandomMeals = async (count = 8) => {
-  const requests = Array.from({ length: count }, () => mealDbApi.get("/random.php"));
-  const results = await Promise.allSettled(requests);
-  const meals = results
-    .filter((result) => result.status === "fulfilled")
-    .map((result) => result.value.data.meals?.[0])
-    .filter(Boolean);
+  const mealsById = new Map();
+  const maxAttempts = count * 3;
+
+  for (let attempt = 0; attempt < maxAttempts && mealsById.size < count; attempt += count) {
+    const remaining = count - mealsById.size;
+    const requests = Array.from({ length: remaining }, () => mealDbApi.get("/random.php"));
+    const results = await Promise.allSettled(requests);
+
+    results
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => result.value.data.meals?.[0])
+      .filter((meal) => meal?.idMeal && !mealsById.has(meal.idMeal))
+      .forEach((meal) => mealsById.set(meal.idMeal, meal));
+  }
+
+  const meals = [...mealsById.values()];
 
   if (meals.length === 0) {
     throw new Error("No random meals were returned by TheMealDB.");
